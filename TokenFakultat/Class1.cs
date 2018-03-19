@@ -16,7 +16,8 @@ namespace TokenFakultat
 
             var claims = new[]
             {
-                new Clam(ClaimTypes.GivenName, user.UserName)
+                new Claim(ClaimTypes.GivenName, user.UserName),
+                new Claim(ClaimTypes.Role, "Admin")
             };
 
             //(strona ktora odbiera validacje, nasz front wysyla zapytanie, mozemy wogle nie podawać, kiedy token wygasa- mozemy nie podawac, uzyskujemy credentiale)
@@ -28,7 +29,8 @@ namespace TokenFakultat
     }
 
     //moteoda w ajkims kontrolerze
-    [Authorize]
+    //mozemy przekazac role ze do tej metody ma tylko uprawnienai admin
+    [Authorize(Role="Admin")]
     public IActionResult GetUserInfo() {
         var username = User.Claims.FirstOrDefault(x => x.Type === ClaimTypes.GivenName);
     }
