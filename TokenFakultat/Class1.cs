@@ -30,7 +30,9 @@ namespace TokenFakultat
 
     //moteoda w ajkims kontrolerze
     //mozemy przekazac role ze do tej metody ma tylko uprawnienai admin
-    [Authorize(Role="Admin")]
+    //Core ma Policy mozna sprawdzac czy ma role czy nie jesli nie to 403 Forbidden - strzelanie do bazy nie jest git 
+    // lepiej cashowac role, zmieniac role przez cashe
+    [Authorize(Policy="Admin")]
     public IActionResult GetUserInfo() {
         var username = User.Claims.FirstOrDefault(x => x.Type === ClaimTypes.GivenName);
     }
